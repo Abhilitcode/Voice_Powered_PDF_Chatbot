@@ -84,21 +84,19 @@ def handle_userinput(user_question):
                     
 def get_voice_input():
     recognizer = sr.Recognizer()
-    microphone = sr.Microphone()
-    
-    with microphone as source:
-        st.info("Listening... Please speak now!")
+    with sr.Microphone() as source:
+        recognizer.adjust_for_ambient_noise(source)
+        print("Please speak now...")
+        audio = recognizer.listen(source)
         try:
-            recognizer.adjust_for_ambient_noise(source)
-            audio = recognizer.listen(source, timeout=20)  # Wait for up to 20 seconds
-            text = recognizer.recognize_google(audio)  # Use Google Speech-to-Text
+            # Use Google Web Speech API to recognize speech
+            text = recognizer.recognize_google(audio)
             return text
-        except sr.WaitTimeoutError:
-            st.error("Listening timed out! Please try again.")
         except sr.UnknownValueError:
-            st.error("Sorry, I couldn't understand your speech. Please try again.")
+            print("Sorry, I couldn't understand the speech.")
         except sr.RequestError as e:
-            st.error(f"Error with speech recognition service: {e}")
+            print(f"Could not request results; {e}")
+
     return None
 
 
