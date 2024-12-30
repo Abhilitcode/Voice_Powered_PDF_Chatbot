@@ -1,5 +1,5 @@
 import streamlit as st 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from PyPDF2 import PdfFileReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
@@ -11,6 +11,9 @@ from langchain.chains.conversational_retrieval.base import ConversationalRetriev
 from htmlTemplates import css, bot_template, user_template
 import speech_recognition as sr  # For voice input
 
+
+# Accessing the OpenAI API key from secrets
+openai_api_key = st.secrets["api_keys"]["OPENAI_API_KEY"]
 
 #function to read pdfs and extract text
 def get_text_from_pdf(pdf_docs):
@@ -46,13 +49,13 @@ def get_text_chunks(text):
 # Maps the original text to the embeddings for retrieval.
 
 def get_vectorstore(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     # embeddings = HuggingFaceEmbeddings(model_name="hkunlp/instructor-xl")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain(vector_store):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(openai_api_key=openai_api_key)
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chains = ConversationalRetrievalChain.from_llm(
         llm = llm,
@@ -100,7 +103,7 @@ def get_voice_input():
 
 
 def main():
-    load_dotenv()
+    # load_dotenv()
     st.set_page_config(page_title='Voice-Powered PDF Chatbot', page_icon='📖🎤')
     st.write(css,unsafe_allow_html=True)
     
