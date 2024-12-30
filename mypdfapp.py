@@ -126,6 +126,15 @@ def main():
     
         
     st.header('Voice-Powered PDF Chatbot :books:')
+
+     # Displaying the notes
+    st.subheader("Important Notes:")
+    st.write("""
+    1. **Upload your PDF documents first, and then enter your question.**
+    2. **Use either text or voice input, but not both at the same time.**
+       - If you use the microphone for the first question, please refresh the page and then use voice input.
+       - Use only audio or only text input—basically, one at a time.
+    """)
     
     # Text Input
     user_question = st.text_input("Ask a question about your documents:", key="text_input")
