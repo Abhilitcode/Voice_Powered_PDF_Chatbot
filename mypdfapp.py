@@ -86,24 +86,29 @@ def handle_userinput(user_question):
                     
                     
 def get_voice_input():
-    # Record audio in the browser
+    # Record audio in the browser using st_audiorec
     audio_bytes = st_audiorec()
     if audio_bytes:
-        st.info("Processing audio...")
         try:
-            # Convert raw bytes to an AudioSegment
-            audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format="wav")
+            # Convert audio to a file-like object
+            audio_file = io.BytesIO(audio_bytes)
+            
+            # Convert to AudioSegment format (ensure it is wav format)
+            audio = AudioSegment.from_file(audio_file, format="wav")
+            
+            # Use speech_recognition to process the audio
             recognizer = sr.Recognizer()
-            with io.BytesIO(audio.export(format="wav")) as audio_file:
-                with sr.AudioFile(audio_file) as source:
-                    recognizer.adjust_for_ambient_noise(source)
-                    audio_data = recognizer.record(source)
-                    text = recognizer.recognize_google(audio_data)
-                    return text
+            with sr.AudioFile(io.BytesIO(audio.export(format="wav").read())) as source:
+                recognizer.adjust_for_ambient_noise(source)
+                audio_data = recognizer.record(source)
+                
+                # Use Google Speech Recognition to transcribe the audio
+                text = recognizer.recognize_google(audio_data)
+                return text
         except Exception as e:
             st.error(f"Error processing audio: {e}")
+    
     return None
-
 
 def main():
     # load_dotenv()
