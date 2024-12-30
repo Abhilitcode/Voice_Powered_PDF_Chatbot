@@ -1,5 +1,8 @@
 import streamlit as st 
 # from dotenv import load_dotenv
+from st_audiorec import st_audiorec
+import io
+from pydub import AudioSegment
 from PyPDF2 import PdfFileReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
@@ -83,20 +86,22 @@ def handle_userinput(user_question):
                     
                     
 def get_voice_input():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        recognizer.adjust_for_ambient_noise(source)
-        print("Please speak now...")
-        audio = recognizer.listen(source)
-        try:
-            # Use Google Web Speech API to recognize speech
-            text = recognizer.recognize_google(audio)
-            return text
-        except sr.UnknownValueError:
-            print("Sorry, I couldn't understand the speech.")
-        except sr.RequestError as e:
-            print(f"Could not request results; {e}")
-
+    # Record audio in the browser
+    audio_bytes = st_audiorec()
+    if audio_bytes:
+        st.info("Processing audio...")
+        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format="wav")
+        recognizer = sr.Recognizer()
+        with sr.AudioFile(io.BytesIO(audio.export().read())) as source:
+            try:
+                recognizer.adjust_for_ambient_noise(source)
+                audio_data = recognizer.record(source)
+                text = recognizer.recognize_google(audio_data)
+                return text
+            except sr.UnknownValueError:
+                st.error("Sorry, I couldn't understand your speech. Please try again.")
+            except sr.RequestError as e:
+                st.error(f"Error with speech recognition service: {e}")
     return None
 
 
