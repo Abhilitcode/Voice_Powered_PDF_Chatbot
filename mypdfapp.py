@@ -87,21 +87,21 @@ def handle_userinput(user_question):
                     
 def get_voice_input():
     # Record audio in the browser
-    audio_bytes = st_audiorec()
+    audio_bytes = st_audiorec(key="audio_recorder")
     if audio_bytes:
         st.info("Processing audio...")
-        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format="wav")
-        recognizer = sr.Recognizer()
-        with sr.AudioFile(io.BytesIO(audio.export().read())) as source:
-            try:
-                recognizer.adjust_for_ambient_noise(source)
-                audio_data = recognizer.record(source)
-                text = recognizer.recognize_google(audio_data)
-                return text
-            except sr.UnknownValueError:
-                st.error("Sorry, I couldn't understand your speech. Please try again.")
-            except sr.RequestError as e:
-                st.error(f"Error with speech recognition service: {e}")
+        try:
+            # Convert raw bytes to an AudioSegment
+            audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format="wav")
+            recognizer = sr.Recognizer()
+            with io.BytesIO(audio.export(format="wav")) as audio_file:
+                with sr.AudioFile(audio_file) as source:
+                    recognizer.adjust_for_ambient_noise(source)
+                    audio_data = recognizer.record(source)
+                    text = recognizer.recognize_google(audio_data)
+                    return text
+        except Exception as e:
+            st.error(f"Error processing audio: {e}")
     return None
 
 
@@ -121,18 +121,18 @@ def main():
         
     st.header('Voice-Powered PDF Chatbot :books:')
     
-    user_question = st.text_input("Ask a question about your documents:")
+    # Text Input
+    user_question = st.text_input("Ask a question about your documents:", key="text_input")
     if user_question:
         handle_userinput(user_question)
-    
-# Add Record Voice button below the input field
-    if st.button("Record Voice"):
-        voice_input = get_voice_input()
-        if voice_input:
-            # Once the voice is converted to text, update the user input and process it
-            st.session_state.voice_input = voice_input  # Store it in session state for reference
-            st.text_input("Ask a question about your documents:", value=voice_input)  # Update input field with voice text
-            handle_userinput(voice_input)  # Process the voice input just like typed input
+
+    # Voice Input
+    st.subheader("Or Record Your Question:")
+    voice_input = get_voice_input()
+    if voice_input:
+        st.session_state.voice_input = voice_input
+        st.success(f"Recognized voice input: {voice_input}")
+        handle_userinput(voice_input)
     
     
     with st.sidebar:
