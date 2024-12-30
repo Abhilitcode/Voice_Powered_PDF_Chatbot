@@ -87,7 +87,7 @@ def handle_userinput(user_question):
                     
 def get_voice_input():
     # Record audio in the browser
-    audio_bytes = st_audiorec(key="audio_recorder")
+    audio_bytes = st_audiorec()
     if audio_bytes:
         st.info("Processing audio...")
         try:
