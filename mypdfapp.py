@@ -134,15 +134,11 @@ def main():
 
     # Voice Input
     st.subheader("Or Record Your Question:")
-# Disabling the text input field if voice input is in progress
-    if not st.session_state.voice_input:
-        voice_input = get_voice_input()
-        if voice_input:
-            st.session_state.voice_input = voice_input
-            st.success(f"Recognized voice input: {voice_input}")
-            handle_userinput(voice_input)
-    else:
-        st.write("Listening... Please wait for the voice input to finish.")
+    voice_input = get_voice_input()
+    if voice_input:
+        st.session_state.voice_input = voice_input
+        st.success(f"Recognized voice input: {voice_input}")
+        handle_userinput(voice_input)
     
     
     with st.sidebar:
