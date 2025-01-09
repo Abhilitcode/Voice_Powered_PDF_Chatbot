@@ -153,8 +153,8 @@ def main():
     #         handle_userinput(voice_input)
 
 # Handle Inputs
-    if user_question or voice_input:
-        if user_question:
+    if (submit_button and user_question) or voice_input:
+        if submit_button and user_question:
             handle_userinput(user_question)
         else:
             handle_userinput(voice_input)
