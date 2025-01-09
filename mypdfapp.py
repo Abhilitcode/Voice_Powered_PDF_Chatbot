@@ -74,19 +74,6 @@ def handle_userinput(user_question):
     
     # max_history = 3
     # st.session_state.chat_history = st.session_state.chat_history[-(max_history * 2):]
-    # Track input type for clarity (optional)
-    if "input_type" not in st.session_state:
-        st.session_state.input_type = "text"
-
-# Check if input type has switched
-    current_type = "voice" if st.session_state.voice_input else "text"
-    if current_type != st.session_state.input_type:
-        st.session_state.chat_history = []
-
-    # Update input type
-    st.session_state.input_type = current_type
-
-
 
     for i, message in enumerate(st.session_state.chat_history):
         if i % 2 == 0:
@@ -152,8 +139,6 @@ def main():
     # Voice Input
     
     user_question = st.text_input("Ask a question about your documents:", key="text_input")
-    # Submit Button
-    submit_button = st.button("Submit")
 
     st.subheader("Or Record Your Question:")
     voice_input = get_voice_input()
@@ -166,13 +151,13 @@ def main():
 
 # Handle Inputs
     # Process user input
-    if submit_button and user_question:
-        # st.session_state.voice_input = ""  # Clear voice input
-        handle_userinput(user_question)
-    elif voice_input:
-        st.session_state.voice_input = voice_input
-        st.success(f"Recognized voice input: {voice_input}")
-        handle_userinput(voice_input)
+    if user_question or voice_input:
+        if user_question:
+            # st.session_state.voice_input = ""  # Clear voice input
+            handle_userinput(user_question)
+        else:
+            st.success(f"Recognized voice input: {voice_input}")
+            handle_userinput(voice_input)
 
     # Voice Input
     # st.subheader("Or Record Your Question:")
