@@ -167,7 +167,7 @@ def main():
 # Handle Inputs
     # Process user input
     if submit_button and user_question:
-        st.session_state.voice_input = ""  # Clear voice input
+        # st.session_state.voice_input = ""  # Clear voice input
         handle_userinput(user_question)
     elif voice_input:
         st.session_state.voice_input = voice_input
