@@ -132,7 +132,7 @@ def main():
     1. **Please upload your PDF documents first, click on 'Process,' and then proceed to enter your question.**
     2. **Please use either text or voice input, but not both simultaneously.**
        - If you choose to use audio input for the first question, kindly refresh the page before switching to text input.
-       - Use either audio or text input—one at a time.
+       - For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.
     """)
     
     # Text Input
@@ -141,6 +141,7 @@ def main():
     user_question = st.text_input("Ask a question about your documents:", key="text_input")
 
     st.subheader("Or Record Your Question:")
+    st.info("Note: If you are using voice input, make sure to clear the text input box before proceeding.")
     voice_input = get_voice_input()
     
     # if (submit_button and user_question) or voice_input:
