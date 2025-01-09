@@ -130,9 +130,7 @@ def main():
     st.subheader("Important Guidelines:")
     st.write("""
     1. **Please upload your PDF documents first, click on 'Process,' and then proceed to enter your question.**
-    2. **Please use either text or voice input, but not both simultaneously.**
-       - If you choose to use audio input for the first question, kindly refresh the page before switching to text input.
-       - For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.
+    2. **For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.**
     """)
     
     # Text Input
