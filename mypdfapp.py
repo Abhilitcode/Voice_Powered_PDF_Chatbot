@@ -141,8 +141,10 @@ def main():
     st.subheader("Or Record Your Question:")
     
     user_question = st.text_input("Ask a question about your documents:", key="text_input")
+    # Submit Button
+    submit_button = st.button("Submit")
     voice_input = get_voice_input()
-    if user_question or voice_input:
+    if (submit_button and user_question) or voice_input:
         if user_question:
             handle_userinput(user_question)
         else:
