@@ -154,12 +154,9 @@ def main():
 
 # Handle Inputs
     if user_question or voice_input:
-        if user_question:
-            handle_userinput(user_question)
-        elif voice_input:
-            handle_userinput(voice_input)
+        handle_userinput(user_question)
     else:
-        st.error("Please enter a question or record your voice input.")
+        handle_userinput(voice_input)
 
     # Voice Input
     # st.subheader("Or Record Your Question:")
