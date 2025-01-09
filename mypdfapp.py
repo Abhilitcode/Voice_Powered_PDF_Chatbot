@@ -155,10 +155,14 @@ def main():
     # Handle Text Input on Button Click
     if submit_button and user_question:
         handle_userinput(user_question)
-
     # Handle Voice Input
-    else:
+    elif voice_input:
+        st.success(f"Recognized voice input: {voice_input}")
         handle_userinput(voice_input)
+    # No Input Case
+    else:
+        if submit_button:
+            st.error("Please enter a question or record your voice input.")
 
     # Voice Input
     # st.subheader("Or Record Your Question:")
