@@ -139,6 +139,14 @@ def main():
     # Text Input
     # Voice Input
     st.subheader("Or Record Your Question:")
+
+        # Initialize session state for text input if not already done
+    if "text_input" not in st.session_state:
+        st.session_state.text_input = ""
+    
+    # Function to clear the text input box
+    def clear_text():
+        st.session_state.text_input = ""
     
     user_question = st.text_input("Ask a question about your documents:", key="text_input")
     # Submit Button
@@ -155,7 +163,7 @@ def main():
     if submit_button and user_question:
         handle_userinput(user_question)
         # Clear the text input box after submission
-        st.session_state.text_input = ""
+        clear_text()
 
     # Handle Voice Input
     elif voice_input:
