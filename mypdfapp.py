@@ -74,6 +74,16 @@ def handle_userinput(user_question):
     
     # max_history = 3
     # st.session_state.chat_history = st.session_state.chat_history[-(max_history * 2):]
+    # Track input type for clarity (optional)
+    if "input_type" not in st.session_state:
+        st.session_state.input_type = input_type
+
+    # Ensure no duplication occurs
+    if input_type != st.session_state.input_type:
+        st.session_state.chat_history = []
+
+    st.session_state.input_type = input_type
+
 
 
     for i, message in enumerate(st.session_state.chat_history):
@@ -153,11 +163,10 @@ def main():
     #         handle_userinput(voice_input)
 
 # Handle Inputs
-    if (submit_button and user_question) or voice_input:
-        if submit_button and user_question:
-            handle_userinput(user_question)
-        else:
-            handle_userinput(voice_input)
+    if submit_button and user_question:
+        handle_userinput(user_question, input_type="text")
+    elif voice_input:
+        handle_userinput(voice_input, input_type="voice")
 
     # Voice Input
     # st.subheader("Or Record Your Question:")
