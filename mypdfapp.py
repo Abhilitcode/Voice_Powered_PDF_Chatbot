@@ -137,17 +137,24 @@ def main():
     """)
     
     # Text Input
-    user_question = st.text_input("Ask a question about your documents:", key="text_input")
-    if user_question:
-        handle_userinput(user_question)
-
     # Voice Input
     st.subheader("Or Record Your Question:")
+    
+    user_question = st.text_input("Ask a question about your documents:", key="text_input")
     voice_input = get_voice_input()
-    if voice_input:
-        st.session_state.voice_input = voice_input
-        st.success(f"Recognized voice input: {voice_input}")
-        handle_userinput(voice_input)
+    if user_question or voice_input:
+        if user_question:
+            handle_userinput(user_question)
+        else:
+            handle_userinput(voice_input)
+
+    # # Voice Input
+    # st.subheader("Or Record Your Question:")
+    # voice_input = get_voice_input()
+    # if voice_input:
+    #     st.session_state.voice_input = voice_input
+    #     st.success(f"Recognized voice input: {voice_input}")
+    #     handle_userinput(voice_input)
     
     
     with st.sidebar:
