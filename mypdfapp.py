@@ -157,7 +157,7 @@ def main():
         handle_userinput(user_question)
 
     # Handle Voice Input
-    elif voice_input:
+    else:
         handle_userinput(voice_input)
 
     # Voice Input
