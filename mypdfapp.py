@@ -144,13 +144,24 @@ def main():
     # Submit Button
     submit_button = st.button("Submit")
     voice_input = get_voice_input()
-    if (submit_button and user_question) or voice_input:
-        if user_question:
-            handle_userinput(user_question)
-        else:
-            handle_userinput(voice_input)
+    
+    # if (submit_button and user_question) or voice_input:
+    #     if user_question:
+    #         handle_userinput(user_question)
+    #     else:
+    #         handle_userinput(voice_input)
 
-    # # Voice Input
+    # Handle Text Input on Button Click
+    if submit_button and user_question:
+        handle_userinput(user_question)
+        # Clear the text input box after submission
+        st.session_state.text_input = ""
+
+    # Handle Voice Input
+    elif voice_input:
+        handle_userinput(voice_input)
+
+    # Voice Input
     # st.subheader("Or Record Your Question:")
     # voice_input = get_voice_input()
     # if voice_input:
