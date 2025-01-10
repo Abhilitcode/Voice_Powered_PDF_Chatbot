@@ -130,8 +130,8 @@ def main():
     st.subheader("Important Guidelines:")
     st.write("""
     1. **Please upload your PDF documents first, click on 'Process,' and then proceed to enter your question.**
-    2. **To upload your PDFs, tap on the '>' icon at the top-left corner of your screen (on mobile) to access the sidebar. On the sidebar, you will find the option to upload your PDFs.**
-    3. **For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.**
+    2. **To upload your PDFs, tap on the '>' icon at the top-left corner of your screen to access the sidebar. On the sidebar, you will find the option to upload your PDFs.**
+    3. **For the best experience, avoid using voice and text inputs simultaneously. Please use one input method at a time.**
     """)
 
     
