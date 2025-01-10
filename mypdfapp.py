@@ -130,13 +130,15 @@ def main():
     st.subheader("Important Guidelines:")
     st.write("""
     1. **Please upload your PDF documents first, click on 'Process,' and then proceed to enter your question.**
-    2. **For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.**
+    2. **To upload your PDFs, tap on the '>' icon at the top-left corner of your screen (on mobile) to access the sidebar. On the sidebar, you will find the option to upload your PDFs.**
+    3. **For the best experience, avoid using both voice and text inputs at the same time. Please use one input method at a time.**
     """)
+
     
     # Text Input
     # Voice Input
     
-    user_question = st.text_input("Ask a question about your documents:", key="text_input")
+    user_question = st.text_input("Ask a question related to the content of your uploaded PDFs:", key="text_input")
 
     st.subheader("Or Record Your Question:")
     st.info("Note: If you are using voice input, make sure to clear the text input box before proceeding.")
